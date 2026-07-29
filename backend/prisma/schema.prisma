@@ -1,0 +1,187 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================
+// User & Admin Management
+// ============================
+model Admin {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  name      String
+  role      String    @default("admin")
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  @@map("admins")
+}
+
+// ============================
+// Coach Profile
+// ============================
+model Coach {
+  id                    String    @id @default(cuid())
+  name                  String
+  title                 String
+  email                 String    @unique
+  phone                 String?
+  whatsappNumber        String?
+  bio                   String?   @db.Text
+  photoUrl              String?
+  expertise             String?   @db.Text // comma-separated
+  yearsOfExperience     Int?
+  certifications        String?   @db.Text // comma-separated
+  socialMedia           Json?     // { twitter, linkedin, facebook, instagram }
+  sessionDurationMinutes Int    @default(60)
+  sessionBufferMinutes  Int     @default(15)
+  timezone              String  @default("UTC")
+  googleCalendarId      String?
+  googleAccessToken     String? @db.Text
+  googleRefreshToken    String? @db.Text
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  
+  availabilities        Availability[]
+  unavailableDates      UnavailableDate[]
+  bookings              Booking[]
+  specialEvents         SpecialEvent[]
+  
+  @@map("coaches")
+}
+
+// ============================
+// Availability Management
+// ============================
+model Availability {
+  id        String    @id @default(cuid())
+  coachId   String
+  coach     Coach     @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  
+  dayOfWeek Int       // 0 = Monday, 6 = Sunday
+  startTime String    // "09:00" format
+  endTime   String    // "17:00" format
+  isAvailable Boolean @default(true)
+  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  @@unique([coachId, dayOfWeek])
+  @@map("availabilities")
+}
+
+model UnavailableDate {
+  id        String    @id @default(cuid())
+  coachId   String
+  coach     Coach?    @relation(fields: [coachId], references: [id], onDelete: SetNull)
+  
+  date      DateTime
+  reason    String?
+  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  @@map("unavailable_dates")
+}
+
+// ============================
+// Bookings / Reservations
+// ============================
+model Booking {
+  id                String    @id @default(cuid())
+  coachId           String
+  coach             Coach     @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  
+  clientName        String
+  clientEmail       String
+  clientPhone       String
+  clientMessage     String?   @db.Text
+  
+  sessionDate       DateTime
+  sessionStartTime  String    // "09:00" format
+  sessionEndTime    String    // "10:00" format
+  sessionDurationMinutes Int @default(60)
+  
+  subject           String
+  status            BookingStatus @default(PENDING) // PENDING, CONFIRMED, CANCELLED
+  
+  googleCalendarEventId String?
+  
+  confirmationEmailSent Boolean @default(false)
+  reminderEmailSent     Boolean @default(false)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@index([coachId])
+  @@index([sessionDate])
+  @@index([status])
+  @@map("bookings")
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+// ============================
+// Special Events
+// ============================
+model SpecialEvent {
+  id          String    @id @default(cuid())
+  coachId     String
+  coach       Coach     @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  
+  title       String
+  description String?   @db.Text
+  image       String?
+  location    String?
+  eventDate   DateTime
+  eventTime   String?   // "14:00" format
+  
+  registrationLink String?
+  isPublished Boolean @default(false)
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([coachId])
+  @@index([isPublished])
+  @@map("special_events")
+}
+
+// ============================
+// Notifications & Emails
+// ============================
+model EmailLog {
+  id          String    @id @default(cuid())
+  recipientEmail String
+  subject     String
+  template    String
+  status      EmailStatus @default(PENDING)
+  sendAt      DateTime?
+  error       String?
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@index([status])
+  @@map("email_logs")
+}
+
+enum EmailStatus {
+  PENDING
+  SENT
+  FAILED
+}
