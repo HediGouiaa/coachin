@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Award, Target, Users, Briefcase, Star, ArrowRight } from 'lucide-react'
+import { Award, Target, Briefcase, Star, ArrowRight } from 'lucide-react'
 import api from '../services/api'
 import { Coach } from '../types'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -10,6 +10,11 @@ export default function Overview() {
   const [coach, setCoach] = useState<Coach | null>(null)
   const [loading, setLoading] = useState(true)
   const { language } = useLanguage()
+
+  const fallbackBio = "Je m'appelle Malak Labidi, professeure de langue et de littérature françaises. J'enseigne le français en Tunisie depuis 1998.\n\nMon parcours a été marqué par de nombreuses épreuves qui m'ont poussée à chercher le changement, la connaissance et le bonheur. Face à la maladie, j'ai choisi de relever le défi plutôt que de me résigner. À travers les livres, les formations en ligne et la découverte du monde, j'ai trouvé un nouveau chemin vers l'épanouissement et la joie de vivre.\n\nC'est de cette quête qu'est né ce site, créé avec amour pour partager avec vous mes découvertes et vous accompagner sur le chemin de la connaissance et du bonheur."
+  const fallbackPhoto = '/coach.jpg'
+  const displayName = 'Malak Labidi'
+  const displayTitle = 'Professeure de langue et de littérature françaises'
 
   useEffect(() => {
     const fetchCoach = async () => {
@@ -44,13 +49,13 @@ export default function Overview() {
                 {getTranslation('welcome', language)}
               </p>
               <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                {coach?.name || getTranslation('welcome', language)}
+                {displayName}
               </h1>
               <p className="text-2xl text-secondary-600 font-semibold mb-4">
-                {coach?.title || getTranslation('welcome', language)}
+                {displayTitle}
               </p>
-              <p className="text-gray-600 text-lg leading-relaxed mb-8 max-w-2xl">
-                {coach?.bio || getTranslation('welcome', language)}
+              <p className="text-gray-600 text-lg leading-relaxed mb-8 max-w-2xl whitespace-pre-line">
+                {fallbackBio}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
@@ -67,8 +72,8 @@ export default function Overview() {
             {/* Right Image */}
             <div className="animate-fadeIn">
               <img
-                src={coach?.photoUrl || 'https://via.placeholder.com/500x600?text=Professional+Coach'}
-                alt={coach?.name}
+                src={fallbackPhoto}
+                alt={displayName}
                 className="rounded-2xl shadow-2xl w-full h-auto object-cover"
               />
             </div>

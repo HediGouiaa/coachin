@@ -2,6 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateCoachDto } from './dto/update-coach.dto';
 
+const defaultCoachBio = "Je m'appelle Malak Labidi, professeure de langue et de littérature françaises. J'enseigne le français en Tunisie depuis 1998.\n\nMon parcours a été marqué par de nombreuses épreuves qui m'ont poussée à chercher le changement, la connaissance et le bonheur. Face à la maladie, j'ai choisi de relever le défi plutôt que de me résigner. À travers les livres, les formations en ligne et la découverte du monde, j'ai trouvé un nouveau chemin vers l'épanouissement et la joie de vivre.\n\nC'est de cette quête qu'est né ce site, créé avec amour pour partager avec vous mes découvertes et vous accompagner sur le chemin de la connaissance et du bonheur.";
+const defaultCoachPhotoUrl = '/coach.jpg';
+
 @Injectable()
 export class CoachService {
   constructor(private prisma: PrismaService) {
@@ -14,13 +17,13 @@ export class CoachService {
       if (!coachExists) {
         await this.prisma.coach.create({
           data: {
-            name: process.env.COACH_NAME || 'Professional Coach',
-            title: process.env.COACH_TITLE || 'Life Coach',
+            name: process.env.COACH_NAME || 'Malak Labidi',
+            title: process.env.COACH_TITLE || 'Professeure de langue et de littérature françaises',
             email: process.env.COACH_EMAIL || 'coach@example.com',
             phone: process.env.COACH_PHONE,
             whatsappNumber: process.env.WHATSAPP_PHONE_NUMBER,
-            bio: process.env.COACH_BIO,
-            photoUrl: process.env.COACH_PHOTO_URL,
+            bio: process.env.COACH_BIO || defaultCoachBio,
+            photoUrl: process.env.COACH_PHOTO_URL || defaultCoachPhotoUrl,
             expertise: process.env.COACH_EXPERTISE,
             yearsOfExperience: parseInt(process.env.COACH_EXPERIENCE_YEARS || '10', 10),
             certifications: process.env.COACH_CERTIFICATIONS,
@@ -34,13 +37,13 @@ export class CoachService {
         await this.prisma.coach.update({
           where: { id: coachExists.id },
           data: {
-            name: process.env.COACH_NAME || 'Professional Coach',
-            title: process.env.COACH_TITLE || 'Life Coach',
+            name: process.env.COACH_NAME || 'Malak Labidi',
+            title: process.env.COACH_TITLE || 'Professeure de langue et de littérature françaises',
             email: process.env.COACH_EMAIL || 'coach@example.com',
             phone: process.env.COACH_PHONE,
             whatsappNumber: process.env.WHATSAPP_PHONE_NUMBER,
-            bio: process.env.COACH_BIO,
-            photoUrl: process.env.COACH_PHOTO_URL,
+            bio: process.env.COACH_BIO || defaultCoachBio,
+            photoUrl: process.env.COACH_PHOTO_URL || defaultCoachPhotoUrl,
             expertise: process.env.COACH_EXPERTISE,
             yearsOfExperience: parseInt(process.env.COACH_EXPERIENCE_YEARS || '10', 10),
             certifications: process.env.COACH_CERTIFICATIONS,

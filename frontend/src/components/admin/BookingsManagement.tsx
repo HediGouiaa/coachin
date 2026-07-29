@@ -30,6 +30,7 @@ export default function BookingsManagement() {
       setBookings(data)
     } catch (error) {
       console.error('❌ Failed to fetch bookings:', error)
+      setError('Failed to load bookings')
     } finally {
       setLoading(false)
     }
@@ -42,6 +43,7 @@ export default function BookingsManagement() {
         fetchBookings()
       } catch (error) {
         console.error('Failed to approve booking:', error)
+        setError('Failed to approve booking')
       }
     }
   }
@@ -55,6 +57,7 @@ export default function BookingsManagement() {
         fetchBookings()
       } catch (error) {
         console.error('Failed to reject booking:', error)
+        setError('Failed to reject booking')
       }
     }
   }
@@ -66,6 +69,7 @@ export default function BookingsManagement() {
         fetchBookings()
       } catch (error) {
         console.error('Failed to delete booking:', error)
+        setError('Failed to delete booking')
       }
     }
   }

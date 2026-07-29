@@ -1,8 +1,8 @@
 import { MessageCircle } from 'lucide-react'
 
 export default function WhatsAppButton() {
-  const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '+1234567890'
-  const message = import.meta.env.VITE_WHATSAPP_MESSAGE || 'Hello, I would like to know more about your coaching services.'
+  const whatsappNumber = (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env?.VITE_WHATSAPP_NUMBER || '+1234567890'
+  const message = (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env?.VITE_WHATSAPP_MESSAGE || 'Hello, I would like to know more about your coaching services.'
 
   const handleClick = () => {
     const encodedMessage = encodeURIComponent(message)

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Lock, Mail, AlertCircle } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
-import { setAuthToken, setAdminName } from '../utils/auth'
 
 export default function AdminLogin() {
   const navigate = useNavigate()
@@ -97,13 +96,7 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-600">
-            <p>Demo Credentials:</p>
-            <p className="font-mono text-xs mt-2">
-              Email: admin@coachingplatform.com<br />
-              Password: Admin@123456
-            </p>
-          </div>
+          
 
           <div className="mt-6 pt-6 border-t border-gray-200">
             <Link to="/" className="text-primary-600 hover:text-primary-700 font-semibold text-center block">

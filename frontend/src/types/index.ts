@@ -3,6 +3,8 @@ export interface Coach {
   name: string
   title: string
   bio?: string
+  email?: string
+  phone?: string
   photoUrl?: string
   expertise?: string
   yearsOfExperience?: number

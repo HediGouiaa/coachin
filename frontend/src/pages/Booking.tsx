@@ -86,10 +86,17 @@ export default function Booking() {
     }
   }, [selectedDate, step])
 
-  const handleDateSelect = (date: Date) => {
-    setSelectedDate(date)
-    setSelectedTime(null)
-    setStep('time')
+  const handleDateSelect = (value: any) => {
+    const selectedDateValue = Array.isArray(value) ? value[0] : value
+
+    if (selectedDateValue instanceof Date) {
+      setSelectedDate(selectedDateValue)
+      setSelectedTime(null)
+      setStep('time')
+    } else {
+      setSelectedDate(null)
+      setSelectedTime(null)
+    }
   }
 
   const handleTimeSelect = (time: string) => {

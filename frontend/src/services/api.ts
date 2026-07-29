@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import { AuthResponse, Booking, Coach, TimeSlot, SpecialEvent, BookingStats, AdminProfile } from '../types'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+const API_URL = (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env?.VITE_API_URL || 'http://localhost:3000'
 
 class ApiService {
   private api: AxiosInstance

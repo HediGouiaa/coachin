@@ -21,15 +21,6 @@ export default function AvailabilityManagement() {
     }
   }
 
-  const handleUpdate = async (dayOfWeek: number, data: any) => {
-    try {
-      await api.updateAvailability(dayOfWeek, data)
-      fetchAvailability()
-    } catch (error) {
-      console.error('Failed to update availability:', error)
-    }
-  }
-
   if (loading) {
     return <div className="text-center py-12">Loading...</div>
   }

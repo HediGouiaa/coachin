@@ -56,14 +56,14 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-400 text-sm">
               <li className="flex items-center space-x-2">
                 <Mail size={16} />
-                <a href="mailto:coach@example.com" className="hover:text-white transition-colors">
-                  coach@example.com
+                <a href="mailto:Coach.malak@lamethodedeleveil.com" className="hover:text-white transition-colors">
+                  Coach.malak@lamethodedeleveil.com
                 </a>
               </li>
               <li className="flex items-center space-x-2">
                 <Phone size={16} />
-                <a href="tel:+1234567890" className="hover:text-white transition-colors">
-                  +1 (234) 567-890
+                <a href="tel:+21623449539" className="hover:text-white transition-colors">
+                  +216 23 449 539
                 </a>
               </li>
             </ul>
@@ -73,16 +73,10 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">{getTranslation('followUs', language)}</h4>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Linkedin size={20} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.facebook.com/malak.coaching.7" className="text-gray-400 hover:text-white transition-colors">
                 <Facebook size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.instagram.com/coach____malek/" className="text-gray-400 hover:text-white transition-colors">
                 <Instagram size={20} />
               </a>
             </div>
